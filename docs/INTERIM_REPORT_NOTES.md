@@ -45,14 +45,14 @@ Bu bölüm uygulama sırasında `docs/PROGRESS.md` verilerine göre güncellenec
 
 | Bileşen | Durum | Doğrulama |
 | --- | --- | --- |
-| Proje ve test altyapısı | Planlandı | — |
-| Bellek | Planlandı | — |
-| Decoder | Planlandı | — |
-| CPU temeli | Planlandı | — |
-| RV32I ALU komutları | Planlandı | — |
-| Kontrol akışı | Planlandı | — |
-| Load/store | Planlandı | — |
-| Uçtan uca örnekler | Planlandı | — |
+| Proje ve test altyapısı | Tamamlandı | Katı C11 derlemesi ve `make test` |
+| Bellek | Tamamlandı | Little-endian, sınır ve hizalama testleri |
+| Decoder | Tamamlandı | R/I/S/B/U/J immediate ve alan testleri |
+| CPU temeli | Tamamlandı | Register, PC, fetch, step/run testleri |
+| RV32I ALU komutları | Tamamlandı | Register ve immediate komut testleri |
+| Kontrol akışı | Tamamlandı | Branch, JAL/JALR ve hedef hizalama testleri |
+| Load/store | Tamamlandı | İşaret genişletme, store ve hata testleri |
+| Uçtan uca örnekler | Tamamlandı | İki test programı ve gerçek `.bin` CLI denemesi |
 
 ## 5. Teknik zorluklar
 
@@ -79,12 +79,12 @@ Final aşamasında bu yapıya resmî `riscv-tests` ve Spike karşılaştırması
 
 ### Sonuç alanı
 
-- Test tarihi: —
-- Test komutu: —
-- Toplam/geçen test: —
-- Desteklenen komutlar: —
-- Entegrasyon örnekleri: —
-- Bilinen eksikler: —
+- Test tarihi: 16 Kasım 2026
+- Test komutu: `make clean && make && make test`
+- Toplam/geçen test grubu: 32/32
+- Desteklenen komutlar: RV32I temel talimatları; `ECALL` kontrollü durma
+- Entegrasyon örnekleri: Toplama döngüsü, alt program/load-store ve CLI smoke programı
+- Bilinen eksikler: ELF32, syscall çıktısı, debugger, resmî `riscv-tests` ve Spike karşılaştırması
 
 ## 7. Sonraki adımlar
 
@@ -92,5 +92,7 @@ Ara dönem çekirdeğinden sonra ELF32 yükleyici geliştirilecek, minimal `ecal
 
 ## 8. Ara değerlendirme sonucu
 
-Bu bölüm yalnızca uygulama ve test sonuçları elde edildikten sonra doldurulacaktır. Raporda tamamlanmayan bir özellik tamamlanmış gibi gösterilmeyecek; mevcut oran, doğrulanmış iş paketlerinin ağırlıklı toplamıyla belirtilecektir.
+Planlanan ara dönem kapsamı tamamlanmıştır. Emülatör çekirdeği RV32I komut ailelerini çalıştırabilmekte, ham little-endian binary dosyalarını belleğe yükleyebilmekte ve hatalı komut/bellek durumlarında güvenli biçimde durmaktadır. Katı derleyici uyarıları etkin hâlde temiz derleme alınmış ve 32 test grubunun tamamı geçmiştir.
+
+Bu sonuç, proje planındaki ağırlıklı iş paketlerine göre toplam projenin yüzde 60'ına karşılık gelmektedir. Kalan yüzde 40; ELF32 yükleyici, gerçek syscall davranışı, etkileşimli debugger, resmî test paketi ve Spike karşılaştırmasından oluşmaktadır.
 

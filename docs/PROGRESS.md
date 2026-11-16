@@ -11,13 +11,13 @@
 | Proje yapısı, Makefile ve test altyapısı | %5 | Tamamlandı | `make`, `make test`, katı derleyici uyarıları |
 | Bellek modeli | %8 | Tamamlandı | Little-endian, hizalama, sınır ve null testleri |
 | Decoder ve immediate üretimi | %8 | Tamamlandı | R/I/S/B/U/J alan ve sınır immediate testleri |
-| CPU/register/PC ve çalışma döngüsü | %8 | Planlandı | — |
-| ALU ve upper-immediate komutları | %10 | Planlandı | — |
-| Branch, JAL ve JALR | %7 | Planlandı | — |
-| Load/store komutları | %8 | Planlandı | — |
-| Hata yönetimi ve uçtan uca ham programlar | %4 | Planlandı | — |
-| Vize belgeleri ve demo paketi | %2 | Planlandı | Bu dokümanların ilk sürümü |
-| **Vize toplam hedefi** | **%60** | **%21 doğrulandı** | Aşama 0–2 kalite kapıları geçti |
+| CPU/register/PC ve çalışma döngüsü | %8 | Tamamlandı | CPU durum, fetch, step/run ve x0 testleri |
+| ALU ve upper-immediate komutları | %10 | Tamamlandı | Register/immediate ALU ile LUI/AUIPC testleri |
+| Branch, JAL ve JALR | %7 | Tamamlandı | Alınan/alınmayan ve hizalama testleri |
+| Load/store komutları | %8 | Tamamlandı | Signed/unsigned load, store ve hata atomikliği testleri |
+| Hata yönetimi ve uçtan uca ham programlar | %4 | Tamamlandı | Geçersiz kodlama, iki üretilebilir örnek ve otomatik CLI testi |
+| Vize belgeleri ve demo paketi | %2 | Tamamlandı | Tasarım, plan, ilerleme, ara rapor ve README |
+| **Vize toplam hedefi** | **%60** | **%60 doğrulandı** | `make test`: 32/32; gerçek `.bin` CLI testi başarılı |
 
 ## Final hedefi
 
@@ -37,11 +37,11 @@ Uygulama ilerledikçe aşağıdaki alanlar gerçek komut çıktılarıyla günce
 
 - Son temiz derleme tarihi: 2026-11-16
 - Derleyici uyarısı: 0
-- Toplam test sayısı: 12 (Aşama 0–2)
-- Geçen test sayısı: 12 (Aşama 0–2)
-- Desteklenen RV32I komut sayısı: —
-- Geçen entegrasyon programı sayısı: —
-- Bilinen hata sayısı: —
+- Toplam test grubu: 32 birim/entegrasyon grubu + CLI regresyon paketi
+- Geçen test grubu: 32 + CLI regresyon paketi
+- Desteklenen RV32I temel talimatı: 40 (`ECALL` vize aşamasında kontrollü durma)
+- Geçen entegrasyon programı sayısı: 3 (iki test programı, bir CLI smoke programı)
+- Bilinen çekirdek hatası: 0
 
 ## Başlangıç durumu ve risk
 

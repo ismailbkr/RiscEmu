@@ -3,4 +3,7 @@ build/
 *.d
 *.out
 .DS_Store
+practice/baslangic
+practice/opcode
+examples/raw/*.bin
 

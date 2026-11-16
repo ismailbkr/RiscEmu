@@ -9,7 +9,10 @@ typedef enum {
     RV32_ERR_MEMORY_ALIGNMENT,
     RV32_ERR_INVALID_INSTRUCTION,
     RV32_ERR_STEP_LIMIT,
-    RV32_ERR_HALTED
+    RV32_ERR_HALTED,
+    RV32_ERR_IO,
+    RV32_ERR_IMAGE_FORMAT,
+    RV32_ERR_IMAGE_TOO_LARGE
 } rv32_status_t;
 
 const char *rv32_status_string(rv32_status_t status);

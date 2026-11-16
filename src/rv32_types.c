@@ -19,6 +19,12 @@ const char *rv32_status_string(rv32_status_t status)
         return "instruction step limit reached";
     case RV32_ERR_HALTED:
         return "processor halted";
+    case RV32_ERR_IO:
+        return "input/output error";
+    case RV32_ERR_IMAGE_FORMAT:
+        return "invalid program image";
+    case RV32_ERR_IMAGE_TOO_LARGE:
+        return "program image exceeds memory";
     default:
         return "unknown status";
     }

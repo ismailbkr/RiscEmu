@@ -6,16 +6,19 @@ DEPFLAGS := -MMD -MP
 BUILD_DIR := build
 APP := $(BUILD_DIR)/rv32emu
 TEST_APP := $(BUILD_DIR)/test_runner
+EXAMPLE_GENERATOR := $(BUILD_DIR)/generate_examples
 
-COMMON_SOURCES := src/rv32_types.c src/memory.c src/decoder.c
+COMMON_SOURCES := src/rv32_types.c src/memory.c src/decoder.c src/cpu.c
 APP_SOURCES := src/main.c $(COMMON_SOURCES)
 TEST_SOURCES := tests/test.c tests/test_runner.c tests/test_memory.c \
-	tests/test_decoder.c $(COMMON_SOURCES)
+	tests/test_decoder.c tests/test_cpu.c tests/test_instructions.c \
+	$(COMMON_SOURCES)
 APP_OBJECTS := $(APP_SOURCES:%.c=$(BUILD_DIR)/%.o)
 TEST_OBJECTS := $(TEST_SOURCES:%.c=$(BUILD_DIR)/%.o)
+EXAMPLE_OBJECT := $(BUILD_DIR)/tools/generate_examples.o
 DEPENDENCIES := $(APP_OBJECTS:.o=.d) $(TEST_OBJECTS:.o=.d)
 
-.PHONY: all test clean
+.PHONY: all test test-cli examples clean
 
 all: $(APP)
 
@@ -27,12 +30,23 @@ $(TEST_APP): $(TEST_OBJECTS)
 	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) $^ -o $@
 
+$(EXAMPLE_GENERATOR): $(EXAMPLE_OBJECT)
+	@mkdir -p $(@D)
+	$(CC) $(CFLAGS) $^ -o $@
+
 $(BUILD_DIR)/%.o: %.c
 	@mkdir -p $(@D)
 	$(CC) $(CPPFLAGS) $(CFLAGS) $(DEPFLAGS) -c $< -o $@
 
 test: $(TEST_APP)
 	./$(TEST_APP)
+	$(MAKE) test-cli
+
+test-cli: $(APP) $(EXAMPLE_GENERATOR)
+	sh tests/test_cli.sh
+
+examples: $(EXAMPLE_GENERATOR)
+	./$(EXAMPLE_GENERATOR) examples/raw
 
 clean:
 	rm -rf $(BUILD_DIR)
